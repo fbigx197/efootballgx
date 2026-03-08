@@ -165,7 +165,7 @@ GX EFOOTBALL FEDERATION
 
 <div class="fadeOut" id="fade"></div>
 
-<audio id="music" autoplay loop>
+<audio id="music" loop>
 <source src="intro.mp3" type="audio/mpeg">
 </audio>
 
@@ -198,19 +198,28 @@ document.getElementById("enterButton").style.display="flex";
 
 let music = document.getElementById("music");
 let musicBtn = document.getElementById("musicBtn");
-let playing = true;
+let playing = false;
 
-/* INTENTAR AUTOPLAY */
+/* INTENTAR AUTOPLAY AL ENTRAR */
 
 window.addEventListener("load", function(){
 
 music.volume = 0.7;
 
-music.play().catch(()=>{
-console.log("Autoplay bloqueado por el navegador");
+music.play().then(()=>{
+
+playing = true;
+musicBtn.innerText = "Música ON";
+
+}).catch(()=>{
+
+playing = false;
+musicBtn.innerText = "Música OFF";
+
 });
 
 });
+
 
 function toggleMusic(){
 
