@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -28,16 +29,12 @@ color:white;
 font-size:30px;
 letter-spacing:7px;
 font-weight:bold;
-
 opacity:0;
-
 animation:fadeTitle 3s ease forwards;
-
 text-shadow:
 0 0 10px rgba(59,130,246,0.9),
 0 0 25px rgba(59,130,246,0.7),
 0 0 40px rgba(59,130,246,0.5);
-
 z-index:5;
 }
 
@@ -79,7 +76,6 @@ z-index:-1;
 /* BOTON CONTINUAR */
 
 #enterButton{
-
 position:fixed;
 bottom:80px;
 left:50%;
@@ -88,97 +84,68 @@ display:none;
 flex-direction:column;
 align-items:center;
 cursor:pointer;
-
 }
 
-/* LOADER MEJORADO */
+/* LOADER */
 
 .loader{
-
 width:70px;
 height:70px;
-
 border:4px solid rgba(255,255,255,0.2);
 border-top:4px solid #3b82f6;
-
 border-radius:50%;
-
 animation:spin 1s linear infinite;
-
 box-shadow:
 0 0 10px #3b82f6,
 0 0 20px #3b82f6;
-
 }
 
 @keyframes spin{
-
 0%{ transform:rotate(0deg); }
-
 100%{ transform:rotate(360deg); }
-
 }
 
 /* TEXTO */
 
 .enterText{
-
 color:white;
 margin-top:12px;
 font-size:15px;
 letter-spacing:4px;
 opacity:0.9;
-
 }
 
 /* BOTON MUSICA */
 
 .musicButton{
-
 position:fixed;
 bottom:20px;
 left:20px;
-
 background:rgba(0,0,0,0.6);
 color:white;
-
 padding:10px 18px;
-
 border-radius:20px;
-
 font-size:14px;
-
 cursor:pointer;
-
 border:1px solid rgba(255,255,255,0.3);
-
 transition:0.3s;
-
 }
 
 .musicButton:hover{
-
 background:rgba(255,255,255,0.1);
-
 }
 
 /* TRANSICION A NEGRO */
 
 .fadeOut{
-
 position:fixed;
 width:100%;
 height:100%;
 background:black;
-
 opacity:0;
-
 pointer-events:none;
-
 transition:opacity 1s;
-
 z-index:20;
-
 }
 
 </style>
@@ -199,7 +166,7 @@ GX EFOOTBALL FEDERATION
 
 <div class="fadeOut" id="fade"></div>
 
-<audio id="music" loop>
+<audio id="music" autoplay loop>
 <source src="intro.mp3" type="audio/mpeg">
 </audio>
 
@@ -214,7 +181,7 @@ PRESIONA PARA CONTINUAR
 </div>
 
 <div class="musicButton" onclick="toggleMusic()" id="musicBtn">
-Música OFF
+Música ON
 </div>
 
 <script>
@@ -232,21 +199,33 @@ document.getElementById("enterButton").style.display="flex";
 
 let music = document.getElementById("music");
 let musicBtn = document.getElementById("musicBtn");
-let playing = false;
+let playing = true;
+
+/* INTENTAR AUTOPLAY */
+
+window.addEventListener("load", function(){
+
+music.volume = 0.7;
+
+music.play().catch(()=>{
+console.log("Autoplay bloqueado por el navegador");
+});
+
+});
 
 function toggleMusic(){
 
-if(!playing){
-
-music.play();
-musicBtn.innerText = "Música ON";
-playing = true;
-
-}else{
+if(playing){
 
 music.pause();
 musicBtn.innerText = "Música OFF";
 playing = false;
+
+}else{
+
+music.play();
+musicBtn.innerText = "Música ON";
+playing = true;
 
 }
 
@@ -274,3 +253,4 @@ window.location.href="menu.html";
 </body>
 
 </html>
+```
