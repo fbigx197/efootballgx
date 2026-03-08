@@ -148,8 +148,6 @@ align-items:center;
 transform:translate(-50%,0);
 }
 
-/* CARTAS */
-
 .player img{
 width:55px;
 margin-bottom:6px;
@@ -157,14 +155,10 @@ transition:transform 0.25s;
 filter:drop-shadow(0 4px 6px rgba(0,0,0,0.7));
 }
 
-/* ZOOM */
-
 .player img:hover{
 transform:scale(1.8);
 z-index:10;
 }
-
-/* NOMBRE */
 
 .player span{
 font-size:12px;
@@ -172,8 +166,6 @@ background:rgba(0,0,0,0.65);
 padding:4px 8px;
 border-radius:6px;
 }
-
-/* BOTON */
 
 .closeBtn{
 margin-top:20px;
@@ -188,74 +180,81 @@ display:inline-block;
 
 .playerMini{
 position:fixed;
-bottom:0;
-left:0;
-width:100%;
-background:#020617;
-border-top:2px solid #2563eb;
-padding:12px 20px;
-box-shadow:0 -5px 20px rgba(0,0,0,0.6);
+bottom:20px;
+right:20px;
+width:320px;
+background:rgba(0,0,0,0.75);
+backdrop-filter:blur(6px);
+border-radius:15px;
+padding:12px;
+display:flex;
+flex-direction:column;
+gap:10px;
+box-shadow:0 0 15px rgba(0,0,0,0.5);
 }
 
 .playerTop{
 display:flex;
 align-items:center;
-gap:15px;
+gap:12px;
 }
 
-#cover{
-width:50px;
-height:50px;
+.playerMini img{
+width:45px;
+height:45px;
 border-radius:8px;
 object-fit:cover;
 }
 
 .songInfo{
 flex:1;
+font-size:13px;
 }
 
 .songTitle{
+font-weight:bold;
 font-size:14px;
-color:#60a5fa;
 }
 
 .playerControls{
 display:flex;
-gap:10px;
+gap:6px;
 }
 
 .ctrlBtn{
-background:#1e293b;
+background:#111827;
 border:none;
 color:white;
-padding:8px 12px;
-border-radius:8px;
+font-size:16px;
+padding:6px 8px;
+border-radius:6px;
 cursor:pointer;
 }
 
 .ctrlBtn:hover{
-background:#2563eb;
+background:#3b82f6;
 }
 
 .progressBar{
 width:100%;
-margin-top:8px;
 }
 
 .time{
 display:flex;
 justify-content:space-between;
 font-size:11px;
-margin-top:4px;
-opacity:0.7;
+opacity:0.8;
 }
 
 .volumeControl{
 display:flex;
 align-items:center;
-gap:10px;
-margin-top:6px;
+gap:8px;
 font-size:12px;
+}
+
+.volumeControl input{
+width:100%;
 }
 
 </style>
@@ -265,6 +264,8 @@ font-size:12px;
 <body>
 
 <div class="overlay"></div>
+
+<audio id="music"></audio>
 
 <h1>Jugadores</h1>
 
@@ -295,14 +296,11 @@ font-size:12px;
 <div class="modalContent">
 
 <div class="playerHeader">
-
 <img id="playerPhoto">
-
 <div>
 <h2 id="playerName"></h2>
 <div id="playerTeam"></div>
 </div>
-
 </div>
 
 <div class="stats" id="stats"></div>
@@ -312,7 +310,6 @@ font-size:12px;
 <div class="closeBtn" onclick="closeModal()">Cerrar</div>
 
 </div>
-
 </div>
 
 <!-- MINI PLAYER -->
@@ -336,7 +333,7 @@ font-size:12px;
 
 </div>
 
-<input type="range" id="progress" class="progressBar" value="0">
+<input type="range" id="progress" class="progressBar" value="0" step="1">
 
 <div class="time">
 <span id="currentTime">0:00</span>
@@ -352,7 +349,7 @@ font-size:12px;
 
 <script>
 
-/* CARTAS */
+/* -------- JUGADORES -------- */
 
 const playerCards={
 "Vinicius":"vinicius.webp",
@@ -378,8 +375,6 @@ const playerCards={
 "Cancelo":"cancelo.webp",
 "Ter Stegen":"terstegen.webp"
 }
-
-/* JUGADORES */
 
 const players={
 
@@ -449,14 +444,10 @@ p.formation.forEach(pl=>{
 let div=document.createElement("div")
 div.className="player"
 
-if(playerCards[pl.name]){
 div.innerHTML=`
 <img src="${playerCards[pl.name]}">
 <span>${pl.name}</span>
 `
-}else{
-div.innerHTML=`<span>${pl.name}</span>`
-}
 
 div.style.left=pl.x+"%"
 div.style.bottom=pl.y+"%"
@@ -471,9 +462,128 @@ function closeModal(){
 document.getElementById("modal").style.display="none"
 }
 
-</script>
+/* -------- MUSICA -------- */
 
-<script src="player.js"></script>
+let music = document.getElementById("music");
+let progress = document.getElementById("progress");
+
+let songs = [
+
+{title:"Bad Bunny - EoO",file:"eoo.mp3",cover:"badbunny.png"},
+{title:"Bad Bunny - Baile Inolvidable",file:"baile.mp3",cover:"badbunny.png"},
+{title:"Fuerza Regida - Coqueta",file:"COQUETA.mp3",cover:"coqueta.jfif"},
+{title:"Bad Bunny - NUEVAYoL",file:"NUEVAYoL.mp3",cover:"badbunny.png"},
+{title:"Michel Telo - Ai se eu te peg",file:"mosa.mp3",cover:"mosa.jfif"}
+
+];
+
+let currentSong = parseInt(localStorage.getItem("songIndex")) || 0;
+let savedTime = parseFloat(localStorage.getItem("songTime")) || 0;
+
+let playing = false;
+
+function loadSong(){
+
+music.src = songs[currentSong].file;
+
+document.getElementById("songTitle").innerText = songs[currentSong].title;
+document.getElementById("cover").src = songs[currentSong].cover;
+
+music.currentTime = savedTime;
+
+music.play();
+playing=true;
+
+}
+
+function nextSong(){
+
+currentSong++;
+
+if(currentSong>=songs.length){
+currentSong=0;
+}
+
+savedTime=0;
+
+loadSong();
+
+}
+
+function prevSong(){
+
+currentSong--;
+
+if(currentSong<0){
+currentSong=songs.length-1;
+}
+
+savedTime=0;
+
+loadSong();
+
+}
+
+function togglePlay(){
+
+if(playing){
+music.pause();
+playing=false;
+}else{
+music.play();
+playing=true;
+}
+
+}
+
+function setVolume(value){
+music.volume=value;
+}
+
+music.addEventListener("timeupdate",function(){
+
+progress.value=music.currentTime;
+
+let current=formatTime(music.currentTime);
+let total=formatTime(music.duration);
+
+document.getElementById("currentTime").innerText=current;
+document.getElementById("duration").innerText=total;
+
+localStorage.setItem("songIndex", currentSong);
+localStorage.setItem("songTime", music.currentTime);
+
+});
+
+music.addEventListener("loadedmetadata",function(){
+progress.max=music.duration;
+});
+
+progress.addEventListener("input",function(){
+music.currentTime=progress.value;
+});
+
+music.addEventListener("ended",function(){
+nextSong();
+});
+
+function formatTime(time){
+
+if(isNaN(time)) return "0:00";
+
+let minutes=Math.floor(time/60);
+let seconds=Math.floor(time%60);
+
+if(seconds<10) seconds="0"+seconds;
+
+return minutes+":"+seconds;
+
+}
+
+loadSong();
+music.volume=0.6;
+
+</script>
 
 </body>
 </html>
