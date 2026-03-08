@@ -1,0 +1,373 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tabla de Posiciones - GX eFootball Federation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:'Orbitron',sans-serif;
+background:linear-gradient(140deg,#020617,#020617,#0f172a,#020617);
+color:white;
+min-height:100vh;
+animation:fadePage 1.2s ease;
+}
+
+/* ANIMACION PAGINA */
+
+@keyframes fadePage{
+from{opacity:0; transform:translateY(20px)}
+to{opacity:1; transform:translateY(0)}
+}
+
+/* TITULO */
+
+h1{
+text-align:center;
+font-size:42px;
+margin-top:40px;
+letter-spacing:3px;
+text-shadow:0 0 20px #2563eb;
+}
+
+/* CONTENEDOR */
+
+.tableContainer{
+
+width:90%;
+max-width:1100px;
+margin:auto;
+margin-top:40px;
+
+background:#0f172a;
+
+border-radius:18px;
+padding:30px;
+
+box-shadow:
+0 0 40px rgba(0,0,0,0.7),
+0 0 25px rgba(37,99,235,0.2);
+
+position:relative;
+overflow:hidden;
+
+}
+
+/* BORDE ANIMADO */
+
+.tableContainer::before{
+
+content:"";
+position:absolute;
+inset:-2px;
+
+background:linear-gradient(
+90deg,
+transparent,
+#2563eb,
+transparent
+);
+
+animation:borderRun 6s linear infinite;
+
+}
+
+@keyframes borderRun{
+0%{transform:translateX(-100%)}
+100%{transform:translateX(100%)}
+}
+
+/* TABLA */
+
+table{
+width:100%;
+border-collapse:collapse;
+text-align:center;
+position:relative;
+z-index:1;
+}
+
+/* HEADER */
+
+thead{
+background:#1e293b;
+}
+
+thead th{
+padding:14px;
+font-size:14px;
+letter-spacing:1px;
+}
+
+/* FILAS */
+
+tbody tr{
+
+border-bottom:1px solid rgba(255,255,255,0.05);
+
+transition:0.25s;
+
+animation:rowAppear 0.8s ease;
+
+}
+
+@keyframes rowAppear{
+from{opacity:0; transform:translateX(-40px)}
+to{opacity:1; transform:translateX(0)}
+}
+
+tbody tr:hover{
+
+background:#1d4ed8;
+
+transform:scale(1.02);
+
+box-shadow:0 0 20px rgba(37,99,235,0.4);
+
+}
+
+/* CELDAS */
+
+td{
+padding:14px;
+font-size:14px;
+}
+
+/* POSICION */
+
+.pos{
+font-weight:800;
+font-size:16px;
+}
+
+/* EQUIPO */
+
+.team{
+text-align:left;
+padding-left:10px;
+font-weight:600;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+/* LOGO */
+
+.team img{
+width:26px;
+height:26px;
+object-fit:contain;
+}
+
+/* TOP 3 */
+
+.top1{
+background:linear-gradient(90deg,#16a34a,#15803d);
+}
+
+.top2{
+background:linear-gradient(90deg,#2563eb,#1d4ed8);
+}
+
+.top3{
+background:linear-gradient(90deg,#9333ea,#7e22ce);
+}
+
+/* PUNTOS */
+
+.points{
+font-weight:800;
+font-size:16px;
+color:#facc15;
+text-shadow:0 0 10px #facc15;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:700px){
+
+td,th{
+font-size:12px;
+padding:8px;
+}
+
+h1{
+font-size:28px;
+}
+
+.team img{
+width:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Tabla de Posiciones</h1>
+
+<div class="tableContainer">
+
+<table>
+
+<thead>
+
+<tr>
+<th>#</th>
+<th class="team">Equipo</th>
+<th>PJ</th>
+<th>G</th>
+<th>E</th>
+<th>P</th>
+<th>GF</th>
+<th>GC</th>
+<th>DG</th>
+<th>PTS</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr class="top1">
+
+<td class="pos">1</td>
+
+<td class="team">
+<img src="realmadrid.png">
+Juan
+</td>
+
+<td>19</td>
+<td>12</td>
+<td>3</td>
+<td>4</td>
+<td>32</td>
+<td>20</td>
+<td>+12</td>
+<td class="points">39</td>
+
+</tr>
+
+<tr class="top2">
+
+<td class="pos">2</td>
+
+<td class="team">
+<img src="mancity.png">
+Lucas
+</td>
+
+<td>17</td>
+<td>10</td>
+<td>5</td>
+<td>2</td>
+<td>28</td>
+<td>15</td>
+<td>+13</td>
+<td class="points">35</td>
+
+</tr>
+
+<tr class="top3">
+
+<td class="pos">3</td>
+
+<td class="team">
+<img src="barcelona.png">
+Mateo
+</td>
+
+<td>18</td>
+<td>9</td>
+<td>4</td>
+<td>5</td>
+<td>26</td>
+<td>22</td>
+<td>+4</td>
+<td class="points">31</td>
+
+</tr>
+
+<tr>
+
+<td class="pos">4</td>
+
+<td class="team">
+<img src="juventus.png">
+Carlos
+</td>
+
+<td>18</td>
+<td>7</td>
+<td>5</td>
+<td>6</td>
+<td>24</td>
+<td>23</td>
+<td>+1</td>
+<td class="points">26</td>
+
+</tr>
+
+<tr>
+
+<td class="pos">5</td>
+
+<td class="team">
+<img src="psg.png">
+Diego
+</td>
+
+<td>17</td>
+<td>6</td>
+<td>4</td>
+<td>7</td>
+<td>20</td>
+<td>25</td>
+<td>-5</td>
+<td class="points">22</td>
+
+</tr>
+
+<tr>
+
+<td class="pos">6</td>
+
+<td class="team">
+<img src="bayern.png">
+Andrés
+</td>
+
+<td>18</td>
+<td>5</td>
+<td>3</td>
+<td>10</td>
+<td>18</td>
+<td>30</td>
+<td>-12</td>
+<td class="points">18</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</body>
+
+</html>
+```
