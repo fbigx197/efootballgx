@@ -34,29 +34,6 @@ margin-top:40px;
 font-size:40px;
 }
 
-/* BOTON VOLVER */
-
-.backButton{
-position:absolute;
-top:20px;
-left:20px;
-background:#1e293b;
-padding:10px 18px;
-border-radius:12px;
-cursor:pointer;
-font-size:14px;
-text-decoration:none;
-color:white;
-transition:0.25s;
-border:1px solid rgba(255,255,255,0.1);
-}
-
-.backButton:hover{
-background:#2563eb;
-transform:scale(1.05);
-box-shadow:0 0 15px rgba(37,99,235,0.6);
-}  
-
 /* GRID */
 
 .playersGrid{
@@ -180,7 +157,7 @@ transition:transform 0.25s;
 filter:drop-shadow(0 4px 6px rgba(0,0,0,0.7));
 }
 
-/* ZOOM HOVER */
+/* ZOOM */
 
 .player img:hover{
 transform:scale(1.8);
@@ -211,69 +188,73 @@ display:inline-block;
 
 .playerMini{
 position:fixed;
-bottom:20px;
-right:20px;
-width:320px;
-background:rgba(0,0,0,0.75);
-backdrop-filter:blur(6px);
-border-radius:15px;
-padding:12px;
-display:flex;
-flex-direction:column;
-gap:10px;
+bottom:0;
+left:0;
+width:100%;
+background:#020617;
+border-top:2px solid #2563eb;
+padding:12px 20px;
+box-shadow:0 -5px 20px rgba(0,0,0,0.6);
 }
 
 .playerTop{
 display:flex;
 align-items:center;
-gap:12px;
+gap:15px;
 }
 
-.playerMini img{
-width:45px;
-height:45px;
+#cover{
+width:50px;
+height:50px;
 border-radius:8px;
+object-fit:cover;
 }
 
 .songInfo{
 flex:1;
-font-size:13px;
 }
 
 .songTitle{
-font-weight:bold;
 font-size:14px;
+color:#60a5fa;
 }
 
 .playerControls{
 display:flex;
-gap:6px;
+gap:10px;
 }
 
 .ctrlBtn{
-background:#111827;
+background:#1e293b;
 border:none;
 color:white;
-font-size:16px;
-padding:6px 8px;
-border-radius:6px;
+padding:8px 12px;
+border-radius:8px;
 cursor:pointer;
+}
+
+.ctrlBtn:hover{
+background:#2563eb;
 }
 
 .progressBar{
 width:100%;
+margin-top:8px;
 }
 
 .time{
 display:flex;
 justify-content:space-between;
 font-size:11px;
+margin-top:4px;
+opacity:0.7;
 }
 
 .volumeControl{
 display:flex;
 align-items:center;
-gap:8px;
+gap:10px;
+margin-top:6px;
 font-size:12px;
 }
 
@@ -287,10 +268,6 @@ font-size:12px;
 
 <h1>Jugadores</h1>
 
-<!-- AUDIO GLOBAL -->
-
-<audio id="music"></audio>
-
 <div class="playersGrid">
 
 <div class="card" onclick="showPlayer('Juan')">
@@ -303,6 +280,12 @@ font-size:12px;
 <img src="lucas.jpg">
 <h3>Lucas</h3>
 <span>Manchester City</span>
+</div>
+
+<div class="card" onclick="showPlayer('Mateo')">
+<img src="mateo.jpg">
+<h3>Mateo</h3>
+<span>Barcelona</span>
 </div>
 
 </div>
@@ -369,11 +352,126 @@ font-size:12px;
 
 <script>
 
-/* AQUÍ VA TODO TU SCRIPT DE JUGADORES (el que ya tienes) */
+/* CARTAS */
+
+const playerCards={
+"Vinicius":"vinicius.webp",
+"Haaland":"haaland.webp",
+"Messi":"messi.webp",
+"Pedri":"pedri.webp",
+"De Jong":"dejong.webp",
+"Bellingham":"bellingham.webp",
+"Theo":"theo.webp",
+"VVD":"vvd.webp",
+"Araujo":"araujo.webp",
+"Walker":"walker.webp",
+"Courtois":"courtois.webp",
+"Mbappe":"mbappe.webp",
+"Neymar":"neymar.webp",
+"De Bruyne":"debruyne.webp",
+"Salah":"salah.webp",
+"Rodri":"rodri.webp",
+"Kroos":"kroos.webp",
+"Davies":"davies.webp",
+"Dias":"dias.webp",
+"Rudiger":"rudiger.webp",
+"Cancelo":"cancelo.webp",
+"Ter Stegen":"terstegen.webp"
+}
+
+/* JUGADORES */
+
+const players={
+
+Juan:{
+team:"Real Madrid",
+photo:"juan.jpg",
+stats:{victorias:12,empates:3,derrotas:4,goles:32},
+formation:[
+{name:"Vinicius",x:20,y:80},
+{name:"Haaland",x:50,y:80},
+{name:"Messi",x:80,y:80},
+{name:"Pedri",x:25,y:60},
+{name:"De Jong",x:50,y:60},
+{name:"Bellingham",x:75,y:60},
+{name:"Theo",x:12,y:38},
+{name:"VVD",x:35,y:38},
+{name:"Araujo",x:65,y:38},
+{name:"Walker",x:88,y:38},
+{name:"Courtois",x:50,y:10}
+]
+},
+
+Lucas:{
+team:"Manchester City",
+photo:"lucas.jpg",
+stats:{victorias:10,empates:5,derrotas:2,goles:28},
+formation:[
+{name:"Mbappe",x:50,y:80},
+{name:"Neymar",x:25,y:60},
+{name:"De Bruyne",x:50,y:60},
+{name:"Salah",x:75,y:60},
+{name:"Rodri",x:35,y:45},
+{name:"Kroos",x:65,y:45},
+{name:"Davies",x:12,y:36},
+{name:"Dias",x:35,y:36},
+{name:"Rudiger",x:65,y:36},
+{name:"Cancelo",x:88,y:36},
+{name:"Ter Stegen",x:50,y:10}
+]
+}
+
+}
+
+function showPlayer(name){
+
+const p=players[name]
+
+document.getElementById("modal").style.display="block"
+
+document.getElementById("playerName").innerText=name
+document.getElementById("playerTeam").innerText=p.team
+document.getElementById("playerPhoto").src=p.photo
+
+let statsHTML=""
+
+for(let s in p.stats){
+statsHTML+=`<div class="stat">${s}: ${p.stats[s]}</div>`
+}
+
+document.getElementById("stats").innerHTML=statsHTML
+
+let field=document.getElementById("field")
+field.innerHTML=""
+
+p.formation.forEach(pl=>{
+
+let div=document.createElement("div")
+div.className="player"
+
+if(playerCards[pl.name]){
+div.innerHTML=`
+<img src="${playerCards[pl.name]}">
+<span>${pl.name}</span>
+`
+}else{
+div.innerHTML=`<span>${pl.name}</span>`
+}
+
+div.style.left=pl.x+"%"
+div.style.bottom=pl.y+"%"
+
+field.appendChild(div)
+
+})
+
+}
+
+function closeModal(){
+document.getElementById("modal").style.display="none"
+}
 
 </script>
-
-<!-- PLAYER GLOBAL -->
 
 <script src="player.js"></script>
 
