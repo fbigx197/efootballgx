@@ -37,8 +37,6 @@ background:rgba(0,0,0,0.75);
 z-index:-1;
 }
 
-/* BOTON MENU */
-
 .backButton{
 position:absolute;
 top:20px;
@@ -129,8 +127,6 @@ max-width:1200px;
 margin:auto;
 }
 
-/* HEADER */
-
 .playerHeader{
 display:flex;
 align-items:center;
@@ -143,8 +139,6 @@ width:80px;
 height:80px;
 border-radius:50%;
 }
-
-/* STATS */
 
 .stats{
 display:flex;
@@ -159,8 +153,6 @@ padding:10px 15px;
 border-radius:10px;
 }
 
-/* CANCHA */
-
 .field{
 position:relative;
 width:100%;
@@ -170,8 +162,6 @@ background-size:cover;
 background-position:center;
 border-radius:20px;
 }
-
-/* JUGADORES */
 
 .player{
 position:absolute;
@@ -199,8 +189,6 @@ background:rgba(0,0,0,0.65);
 padding:4px 8px;
 border-radius:6px;
 }
-
-/* BOTON CERRAR */
 
 .closeBtn{
 margin-top:20px;
@@ -321,8 +309,6 @@ width:100%;
 
 </div>
 
-<!-- MODAL -->
-
 <div class="modal" id="modal">
 
 <div class="modalContent">
@@ -343,8 +329,6 @@ width:100%;
 
 </div>
 </div>
-
-<!-- MINI PLAYER -->
 
 <div class="playerMini">
 
@@ -381,114 +365,7 @@ width:100%;
 
 <script>
 
-/* CARTAS */
-
-const playerCards={
-"Vinicius":"vinicius.webp",
-"Haaland":"haaland.webp",
-"Messi":"messi.webp",
-"Pedri":"pedri.webp",
-"De Jong":"dejong.webp",
-"Bellingham":"bellingham.webp",
-"Theo":"theo.webp",
-"VVD":"vvd.webp",
-"Araujo":"araujo.webp",
-"Walker":"walker.webp",
-"Courtois":"courtois.webp"
-}
-
-/* JUGADORES */
-
-const players={
-
-Juan:{
-team:"Real Madrid",
-photo:"juan.jpg",
-stats:{victorias:12,empates:3,derrotas:4,goles:32},
-
-formation:[
-{name:"Vinicius",x:20,y:80},
-{name:"Haaland",x:50,y:80},
-{name:"Messi",x:80,y:80},
-
-{name:"Pedri",x:25,y:60},
-{name:"De Jong",x:50,y:60},
-{name:"Bellingham",x:75,y:60},
-
-{name:"Theo",x:12,y:38},
-{name:"VVD",x:35,y:38},
-{name:"Araujo",x:65,y:38},
-{name:"Walker",x:88,y:38},
-
-{name:"Courtois",x:50,y:10}
-]
-},
-
-Lucas:{
-team:"Manchester City",
-photo:"lucas.jpg",
-stats:{victorias:10,empates:5,derrotas:2,goles:28},
-
-formation:[
-{name:"Mbappe",x:50,y:80},
-{name:"Neymar",x:25,y:60},
-{name:"Salah",x:75,y:60},
-{name:"Rodri",x:35,y:45},
-{name:"Kroos",x:65,y:45},
-{name:"Davies",x:12,y:36},
-{name:"Dias",x:35,y:36},
-{name:"Rudiger",x:65,y:36},
-{name:"Cancelo",x:88,y:36},
-{name:"Ter Stegen",x:50,y:10}
-]
-}
-
-}
-
-function showPlayer(name){
-
-const p=players[name]
-
-document.getElementById("modal").style.display="block"
-document.getElementById("playerName").innerText=name
-document.getElementById("playerTeam").innerText=p.team
-document.getElementById("playerPhoto").src=p.photo
-
-let statsHTML=""
-for(let s in p.stats){
-statsHTML+=`<div class="stat">${s}: ${p.stats[s]}</div>`
-}
-
-document.getElementById("stats").innerHTML=statsHTML
-
-let field=document.getElementById("field")
-field.innerHTML=""
-
-p.formation.forEach(pl=>{
-
-let div=document.createElement("div")
-div.className="player"
-
-if(playerCards[pl.name]){
-div.innerHTML=`<img src="${playerCards[pl.name]}"><span>${pl.name}</span>`
-}else{
-div.innerHTML=`<span>${pl.name}</span>`
-}
-
-div.style.left=pl.x+"%"
-div.style.bottom=pl.y+"%"
-
-field.appendChild(div)
-
-})
-
-}
-
-function closeModal(){
-document.getElementById("modal").style.display="none"
-}
-
-/* PLAYER MUSICA */
+/* PLAYER MUSICA SIN DESINCRONIZAR */
 
 let music=document.getElementById("music")
 let progress=document.getElementById("progress")
@@ -499,54 +376,94 @@ let songs=[
 {title:"Fuerza Regida - Coqueta",file:"COQUETA.mp3",cover:"coqueta.jfif"}
 ]
 
-let currentSong=0
-let playing=false
+let currentSong=parseInt(localStorage.getItem("songIndex"))||0
+let savedTime=parseFloat(localStorage.getItem("songTime"))||0
+let playing=true
 
 function loadSong(){
+
 music.src=songs[currentSong].file
+
 document.getElementById("songTitle").innerText=songs[currentSong].title
 document.getElementById("cover").src=songs[currentSong].cover
+
+music.currentTime=savedTime
+
+music.play()
+
+}
+
+function nextSong(){
+
+currentSong++
+if(currentSong>=songs.length) currentSong=0
+
+savedTime=0
+loadSong()
+
+}
+
+function prevSong(){
+
+currentSong--
+if(currentSong<0) currentSong=songs.length-1
+
+savedTime=0
+loadSong()
+
+}
+
+function togglePlay(){
+
+if(playing){
+music.pause()
+playing=false
+}else{
 music.play()
 playing=true
 }
 
-function nextSong(){
-currentSong++
-if(currentSong>=songs.length) currentSong=0
-loadSong()
 }
 
-function prevSong(){
-currentSong--
-if(currentSong<0) currentSong=songs.length-1
-loadSong()
+function setVolume(v){
+music.volume=v
 }
 
-function togglePlay(){
-if(playing){music.pause();playing=false}
-else{music.play();playing=true}
-}
+music.addEventListener("timeupdate",function(){
 
-function setVolume(v){music.volume=v}
-
-music.addEventListener("timeupdate",()=>{
 progress.value=music.currentTime
+
 document.getElementById("currentTime").innerText=formatTime(music.currentTime)
 document.getElementById("duration").innerText=formatTime(music.duration)
+
+localStorage.setItem("songIndex",currentSong)
+localStorage.setItem("songTime",music.currentTime)
+
 })
 
-music.addEventListener("loadedmetadata",()=>{progress.max=music.duration})
+music.addEventListener("loadedmetadata",function(){
+progress.max=music.duration
+})
 
-progress.addEventListener("input",()=>{music.currentTime=progress.value})
+progress.addEventListener("input",function(){
+music.currentTime=progress.value
+})
 
-music.addEventListener("ended",()=>{nextSong()})
+music.addEventListener("ended",function(){
+nextSong()
+})
 
 function formatTime(t){
+
 if(isNaN(t)) return "0:00"
+
 let m=Math.floor(t/60)
 let s=Math.floor(t%60)
+
 if(s<10) s="0"+s
+
 return m+":"+s
+
 }
 
 loadSong()
