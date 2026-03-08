@@ -22,6 +22,8 @@ background-position:center;
 overflow-x:hidden;
 min-height:100vh;
 animation:fadePage 1s ease;
+position:relative;
+z-index:1;
 }
 
 @keyframes fadePage{
@@ -31,11 +33,14 @@ to{opacity:1; transform:translateY(0)}
 
 .overlay{
 position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
 background:rgba(0,0,0,0.75);
-z-index:-1;
-}
+z-index:0;
+pointer-events:none;
+}  
 
 .backButton{
 position:absolute;
