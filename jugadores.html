@@ -183,17 +183,32 @@ border-radius:15px;
 
 }
 
+/* JUGADORES EN CANCHA */
+
 .player{
 
 position:absolute;
 
-background:#2563eb;
-
-padding:4px 8px;
-
-border-radius:8px;
+display:flex;
+flex-direction:column;
+align-items:center;
 
 font-size:12px;
+
+}
+
+.player img{
+
+width:70px;
+margin-bottom:4px;
+
+}
+
+.player span{
+
+background:#2563eb;
+padding:4px 8px;
+border-radius:8px;
 
 }
 
@@ -281,6 +296,38 @@ display:inline-block;
 </div>
 
 <script>
+
+/* LISTA DE CARTAS AUTOMATICAS */
+
+const playerCards={
+
+"Vinicius":"vinicius.webp",
+"Haaland":"haaland.webp",
+"Messi":"messi.webp",
+"Pedri":"pedri.webp",
+"De Jong":"dejong.webp",
+"Bellingham":"bellingham.webp",
+"Theo":"theo.webp",
+"VVD":"vvd.webp",
+"Araujo":"araujo.webp",
+"Walker":"walker.webp",
+"Courtois":"courtois.webp",
+
+"Mbappe":"mbappe.webp",
+"Neymar":"neymar.webp",
+"De Bruyne":"debruyne.webp",
+"Salah":"salah.webp",
+"Rodri":"rodri.webp",
+"Kroos":"kroos.webp",
+"Davies":"davies.webp",
+"Dias":"dias.webp",
+"Rudiger":"rudiger.webp",
+"Cancelo":"cancelo.webp",
+"Ter Stegen":"terstegen.webp"
+
+}
+
+/* JUGADORES */
 
 const players={
 
@@ -385,7 +432,18 @@ let div=document.createElement("div")
 
 div.className="player"
 
-div.innerText=pl.name
+if(playerCards[pl.name]){
+
+div.innerHTML=`
+<img src="${playerCards[pl.name]}">
+<span>${pl.name}</span>
+`
+
+}else{
+
+div.innerHTML=`<span>${pl.name}</span>`
+
+}
 
 div.style.left=pl.x+"%"
 div.style.bottom=pl.y+"%"
