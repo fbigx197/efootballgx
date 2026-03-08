@@ -44,14 +44,12 @@ transform:scale(1.05);
 box-shadow:0 0 15px rgba(37,99,235,0.6);
 }
 
-/* ANIMACION PAGINA */
+/* ANIMACION */
 
 @keyframes fadePage{
 from{opacity:0; transform:translateY(20px)}
 to{opacity:1; transform:translateY(0)}
 }
-
-/* TITULO */
 
 h1{
 text-align:center;
@@ -61,54 +59,40 @@ letter-spacing:3px;
 text-shadow:0 0 20px #2563eb;
 }
 
-/* CONTENEDOR */
+/* CONTENEDOR TABLA */
 
 .tableContainer{
-
 width:90%;
 max-width:1100px;
 margin:auto;
 margin-top:40px;
-
 background:#0f172a;
-
 border-radius:18px;
 padding:30px;
-
 box-shadow:
 0 0 40px rgba(0,0,0,0.7),
 0 0 25px rgba(37,99,235,0.2);
-
 position:relative;
 overflow:hidden;
-
 }
 
-/* BORDE ANIMADO */
-
 .tableContainer::before{
-
 content:"";
 position:absolute;
 inset:-2px;
-
 background:linear-gradient(
 90deg,
 transparent,
 #2563eb,
 transparent
 );
-
 animation:borderRun 6s linear infinite;
-
 }
 
 @keyframes borderRun{
 0%{transform:translateX(-100%)}
 100%{transform:translateX(100%)}
 }
-
-/* TABLA */
 
 table{
 width:100%;
@@ -118,8 +102,6 @@ position:relative;
 z-index:1;
 }
 
-/* HEADER */
-
 thead{
 background:#1e293b;
 }
@@ -127,19 +109,12 @@ background:#1e293b;
 thead th{
 padding:14px;
 font-size:14px;
-letter-spacing:1px;
 }
 
-/* FILAS */
-
 tbody tr{
-
 border-bottom:1px solid rgba(255,255,255,0.05);
-
 transition:0.25s;
-
 animation:rowAppear 0.8s ease;
-
 }
 
 @keyframes rowAppear{
@@ -148,30 +123,20 @@ to{opacity:1; transform:translateX(0)}
 }
 
 tbody tr:hover{
-
 background:#1d4ed8;
-
 transform:scale(1.02);
-
 box-shadow:0 0 20px rgba(37,99,235,0.4);
-
 }
-
-/* CELDAS */
 
 td{
 padding:14px;
 font-size:14px;
 }
 
-/* POSICION */
-
 .pos{
 font-weight:800;
 font-size:16px;
 }
-
-/* EQUIPO */
 
 .team{
 text-align:left;
@@ -182,35 +147,100 @@ align-items:center;
 gap:10px;
 }
 
-/* LOGO */
-
 .team img{
 width:26px;
 height:26px;
 object-fit:contain;
 }
 
-/* TOP 3 */
-
-.top1{
-background:linear-gradient(90deg,#16a34a,#15803d);
-}
-
-.top2{
-background:linear-gradient(90deg,#2563eb,#1d4ed8);
-}
-
-.top3{
-background:linear-gradient(90deg,#9333ea,#7e22ce);
-}
-
-/* PUNTOS */
+.top1{background:linear-gradient(90deg,#16a34a,#15803d);}
+.top2{background:linear-gradient(90deg,#2563eb,#1d4ed8);}
+.top3{background:linear-gradient(90deg,#9333ea,#7e22ce);}
 
 .points{
 font-weight:800;
 font-size:16px;
 color:#facc15;
 text-shadow:0 0 10px #facc15;
+}
+
+/* MINI PLAYER */
+
+.playerMini{
+
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+
+background:#020617;
+border-top:2px solid #2563eb;
+
+padding:12px 20px;
+
+box-shadow:0 -5px 20px rgba(0,0,0,0.6);
+
+}
+
+.playerTop{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+#cover{
+width:50px;
+height:50px;
+border-radius:8px;
+object-fit:cover;
+}
+
+.songInfo{
+flex:1;
+}
+
+.songTitle{
+font-size:14px;
+color:#60a5fa;
+}
+
+.playerControls{
+display:flex;
+gap:10px;
+}
+
+.ctrlBtn{
+background:#1e293b;
+border:none;
+color:white;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.ctrlBtn:hover{
+background:#2563eb;
+}
+
+.progressBar{
+width:100%;
+margin-top:8px;
+}
+
+.time{
+display:flex;
+justify-content:space-between;
+font-size:11px;
+margin-top:4px;
+opacity:0.7;
+}
+
+.volumeControl{
+display:flex;
+align-items:center;
+gap:10px;
+margin-top:6px;
+font-size:12px;
 }
 
 /* RESPONSIVE */
@@ -238,8 +268,6 @@ width:20px;
 
 <body>
 
-<!-- BOTON VOLVER -->
-
 <a class="backButton" href="menu.html">
 ← Volver al menú
 </a>
@@ -251,7 +279,6 @@ width:20px;
 <table>
 
 <thead>
-
 <tr>
 <th>#</th>
 <th class="team">Equipo</th>
@@ -264,129 +291,56 @@ width:20px;
 <th>DG</th>
 <th>PTS</th>
 </tr>
-
 </thead>
 
 <tbody>
 
 <tr class="top1">
-
 <td class="pos">1</td>
-
-<td class="team">
-<img src="realmadrid.png">
-Juan
-</td>
-
-<td>19</td>
-<td>12</td>
-<td>3</td>
-<td>4</td>
-<td>32</td>
-<td>20</td>
-<td>+12</td>
+<td class="team"><img src="realmadrid.png">Juan</td>
+<td>19</td><td>12</td><td>3</td><td>4</td>
+<td>32</td><td>20</td><td>+12</td>
 <td class="points">39</td>
-
 </tr>
 
 <tr class="top2">
-
 <td class="pos">2</td>
-
-<td class="team">
-<img src="mancity.png">
-Lucas
-</td>
-
-<td>17</td>
-<td>10</td>
-<td>5</td>
-<td>2</td>
-<td>28</td>
-<td>15</td>
-<td>+13</td>
+<td class="team"><img src="mancity.png">Lucas</td>
+<td>17</td><td>10</td><td>5</td><td>2</td>
+<td>28</td><td>15</td><td>+13</td>
 <td class="points">35</td>
-
 </tr>
 
 <tr class="top3">
-
 <td class="pos">3</td>
-
-<td class="team">
-<img src="barcelona.png">
-Mateo
-</td>
-
-<td>18</td>
-<td>9</td>
-<td>4</td>
-<td>5</td>
-<td>26</td>
-<td>22</td>
-<td>+4</td>
+<td class="team"><img src="barcelona.png">Mateo</td>
+<td>18</td><td>9</td><td>4</td><td>5</td>
+<td>26</td><td>22</td><td>+4</td>
 <td class="points">31</td>
-
 </tr>
 
 <tr>
-
 <td class="pos">4</td>
-
-<td class="team">
-<img src="juventus.png">
-Carlos
-</td>
-
-<td>18</td>
-<td>7</td>
-<td>5</td>
-<td>6</td>
-<td>24</td>
-<td>23</td>
-<td>+1</td>
+<td class="team"><img src="juventus.png">Carlos</td>
+<td>18</td><td>7</td><td>5</td><td>6</td>
+<td>24</td><td>23</td><td>+1</td>
 <td class="points">26</td>
-
 </tr>
 
 <tr>
-
 <td class="pos">5</td>
-
-<td class="team">
-<img src="psg.png">
-Diego
-</td>
-
-<td>17</td>
-<td>6</td>
-<td>4</td>
-<td>7</td>
-<td>20</td>
-<td>25</td>
-<td>-5</td>
+<td class="team"><img src="psg.png">Diego</td>
+<td>17</td><td>6</td><td>4</td><td>7</td>
+<td>20</td><td>25</td><td>-5</td>
 <td class="points">22</td>
-
 </tr>
 
 <tr>
-
 <td class="pos">6</td>
-
-<td class="team">
-<img src="bayern.png">
-Andrés
-</td>
-
-<td>18</td>
-<td>5</td>
-<td>3</td>
-<td>10</td>
-<td>18</td>
-<td>30</td>
-<td>-12</td>
+<td class="team"><img src="bayern.png">Andrés</td>
+<td>18</td><td>5</td><td>3</td><td>10</td>
+<td>18</td><td>30</td><td>-12</td>
 <td class="points">18</td>
-
 </tr>
 
 </tbody>
@@ -429,14 +383,6 @@ Andrés
 </div>
 
 </div>
-
-<script>
-
-/* AQUÍ VA TODO TU SCRIPT DE JUGADORES (el que ya tienes) */
-
-</script>
-
-<!-- PLAYER GLOBAL -->
 
 <script src="player.js"></script>
 
