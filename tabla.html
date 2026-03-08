@@ -21,6 +21,29 @@ min-height:100vh;
 animation:fadePage 1.2s ease;
 }
 
+/* BOTON VOLVER */
+
+.backButton{
+position:absolute;
+top:20px;
+left:20px;
+background:#1e293b;
+padding:10px 18px;
+border-radius:12px;
+cursor:pointer;
+font-size:14px;
+text-decoration:none;
+color:white;
+transition:0.25s;
+border:1px solid rgba(255,255,255,0.1);
+}
+
+.backButton:hover{
+background:#2563eb;
+transform:scale(1.05);
+box-shadow:0 0 15px rgba(37,99,235,0.6);
+}
+
 /* ANIMACION PAGINA */
 
 @keyframes fadePage{
@@ -215,6 +238,12 @@ width:20px;
 
 <body>
 
+<!-- BOTON VOLVER -->
+
+<a class="backButton" href="menu.html">
+← Volver al menú
+</a>
+
 <h1>Tabla de Posiciones</h1>
 
 <div class="tableContainer">
@@ -365,7 +394,6 @@ Andrés
 </table>
 
 </div>
-
 
 <!-- PLAYER GLOBAL -->
 
