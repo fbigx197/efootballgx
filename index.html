@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
 <meta charset="UTF-8">
@@ -16,7 +17,7 @@ overflow:hidden;
 font-family:Arial;
 }
 
-/* VIDEO INTRO */
+/* VIDEO */
 
 #introVideo{
 position:fixed;
@@ -25,33 +26,31 @@ height:100%;
 object-fit:cover;
 }
 
-/* PANTALLA DE CARGA */
+/* CIRCULO */
 
 #loading{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000;
-display:flex;
-justify-content:center;
-align-items:center;
+bottom:60px;
+left:50%;
+transform:translateX(-50%);
+display:none;
 flex-direction:column;
-opacity:0;
-transition:1s;
+align-items:center;
+cursor:pointer;
 }
 
-/* CIRCULO */
+/* loader */
 
 .loader{
-width:80px;
-height:80px;
-border:8px solid #1e293b;
-border-top:8px solid #2563eb;
+width:70px;
+height:70px;
+border:7px solid #1e293b;
+border-top:7px solid #2563eb;
 border-radius:50%;
 animation:spin 1s linear infinite;
 }
+
+/* animacion */
 
 @keyframes spin{
 
@@ -67,8 +66,8 @@ transform:rotate(360deg);
 
 .loading-text{
 color:white;
-margin-top:15px;
-font-size:18px;
+margin-top:10px;
+font-size:16px;
 letter-spacing:2px;
 }
 
@@ -80,42 +79,37 @@ letter-spacing:2px;
 
 <!-- VIDEO -->
 
-<video id="introVideo" autoplay muted>
+<video id="introVideo" autoplay muted playsinline>
 <source src="intro.mp4" type="video/mp4">
 </video>
 
-<!-- LOADING -->
+<!-- CIRCULO -->
 
-<div id="loading">
+<div id="loading" onclick="irMenu()">
 
 <div class="loader"></div>
 
 <div class="loading-text">
-Cargando torneo...
+Pulsa para continuar
 </div>
 
 </div>
 
 <script>
 
-/* CUANDO TERMINA EL VIDEO */
-
-const video = document.getElementById("introVideo");
-const loading = document.getElementById("loading");
-
-video.onended = function(){
-
-video.style.display = "none";
-
-loading.style.opacity = "1";
-
-/* ESPERA 3 SEGUNDOS Y ABRE MENU */
+/* mostrar boton despues de 6 segundos */
 
 setTimeout(function(){
 
-window.location.href = "menu.html";
+document.getElementById("loading").style.display="flex";
 
-},3000);
+},6000);
+
+/* ir al menu */
+
+function irMenu(){
+
+window.location.href="menu.html";
 
 }
 
