@@ -1,1 +1,161 @@
 
+
+PLANTILLA MUSICA
+
+
+
+
+<!-- ========= COPIAR DESDE AQUÍ (MÚSICA GLOBAL) ========= -->
+
+<audio id="music"></audio>
+
+<!-- MINI PLAYER -->
+
+<div class="playerMini">
+
+<div class="playerTop">
+
+<img id="cover" src="badbunny.png">
+
+<div class="songInfo">
+<div>Reproduciendo:</div>
+<div class="songTitle" id="songTitle">Cargando...</div>
+</div>
+
+<div class="playerControls">
+<button class="ctrlBtn" onclick="prevSong()">⏮</button>
+<button class="ctrlBtn" onclick="togglePlay()">⏯</button>
+<button class="ctrlBtn" onclick="nextSong()">⏭</button>
+</div>
+
+</div>
+
+<input type="range" id="progress" class="progressBar" value="0" step="1">
+
+<div class="time">
+<span id="currentTime">0:00</span>
+<span id="duration">0:00</span>
+</div>
+
+<div class="volumeControl">
+🔊
+<input type="range" min="0" max="1" step="0.01" value="0.6" onchange="setVolume(this.value)">
+</div>
+
+</div>
+
+<script>
+
+let music = document.getElementById("music");
+let progress = document.getElementById("progress");
+
+let songs = [
+
+{title:"Bad Bunny - EoO",file:"eoo.mp3",cover:"badbunny.png"},
+{title:"Bad Bunny - Baile Inolvidable",file:"baile.mp3",cover:"badbunny.png"},
+{title:"Fuerza Regida - Coqueta",file:"COQUETA.mp3",cover:"coqueta.jfif"},
+{title:"Bad Bunny - NUEVAYoL",file:"NUEVAYoL.mp3",cover:"badbunny.png"},
+{title:"Michel Telo - Ai se eu te peg",file:"mosa.mp3",cover:"mosa.jfif"}
+
+];
+
+let currentSong = parseInt(localStorage.getItem("songIndex")) || 0;
+let savedTime = parseFloat(localStorage.getItem("songTime")) || 0;
+let playing=false;
+
+function loadSong(){
+
+music.src=songs[currentSong].file;
+
+document.getElementById("songTitle").innerText=songs[currentSong].title;
+document.getElementById("cover").src=songs[currentSong].cover;
+
+music.currentTime=savedTime;
+
+music.play();
+playing=true;
+
+}
+
+function nextSong(){
+
+currentSong++;
+if(currentSong>=songs.length){currentSong=0;}
+
+savedTime=0;
+loadSong();
+
+}
+
+function prevSong(){
+
+currentSong--;
+if(currentSong<0){currentSong=songs.length-1;}
+
+savedTime=0;
+loadSong();
+
+}
+
+function togglePlay(){
+
+if(playing){
+music.pause();
+playing=false;
+}else{
+music.play();
+playing=true;
+}
+
+}
+
+function setVolume(v){
+music.volume=v;
+}
+
+music.addEventListener("timeupdate",function(){
+
+progress.value=music.currentTime;
+
+document.getElementById("currentTime").innerText=formatTime(music.currentTime);
+document.getElementById("duration").innerText=formatTime(music.duration);
+
+localStorage.setItem("songIndex",currentSong);
+localStorage.setItem("songTime",music.currentTime);
+
+});
+
+music.addEventListener("loadedmetadata",function(){
+progress.max=music.duration;
+});
+
+progress.addEventListener("input",function(){
+music.currentTime=progress.value;
+});
+
+music.addEventListener("ended",function(){
+nextSong();
+});
+
+function formatTime(t){
+
+if(isNaN(t)) return "0:00";
+
+let m=Math.floor(t/60);
+let s=Math.floor(t%60);
+
+if(s<10)s="0"+s;
+
+return m+":"+s;
+
+}
+
+loadSong();
+music.volume=0.6;
+
+</script>
+
+<!-- ========= COPIAR HASTA AQUÍ ========= -->
+
+</body>
+</html>
