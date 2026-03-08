@@ -395,6 +395,47 @@ Andrés
 
 </div>
 
+<!-- MINI PLAYER -->
+
+<div class="playerMini">
+
+<div class="playerTop">
+
+<img id="cover" src="badbunny.png">
+
+<div class="songInfo">
+<div>Reproduciendo:</div>
+<div class="songTitle" id="songTitle">Cargando...</div>
+</div>
+
+<div class="playerControls">
+<button class="ctrlBtn" onclick="prevSong()">⏮</button>
+<button class="ctrlBtn" onclick="togglePlay()">⏯</button>
+<button class="ctrlBtn" onclick="nextSong()">⏭</button>
+</div>
+
+</div>
+
+<input type="range" id="progress" class="progressBar" value="0">
+
+<div class="time">
+<span id="currentTime">0:00</span>
+<span id="duration">0:00</span>
+</div>
+
+<div class="volumeControl">
+🔊
+<input type="range" min="0" max="1" step="0.01" value="0.6" onchange="setVolume(this.value)">
+</div>
+
+</div>
+
+<script>
+
+/* AQUÍ VA TODO TU SCRIPT DE JUGADORES (el que ya tienes) */
+
+</script>
+
 <!-- PLAYER GLOBAL -->
 
 <script src="player.js"></script>
