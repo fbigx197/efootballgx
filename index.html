@@ -14,61 +14,84 @@ body{
 margin:0;
 background:black;
 overflow:hidden;
-font-family:Arial;
+font-family:Arial, Helvetica, sans-serif;
 }
 
-/* VIDEO */
+/* VIDEO FONDO */
 
 #introVideo{
 position:fixed;
 width:100%;
 height:100%;
 object-fit:cover;
+z-index:-2;
+}
+
+/* OVERLAY OSCURO */
+
+.overlay{
+position:fixed;
+width:100%;
+height:100%;
+background:linear-gradient(
+to bottom,
+rgba(0,0,0,0.4),
+rgba(0,0,0,0.7)
+);
+z-index:-1;
 }
 
 /* CIRCULO */
 
-#loading{
+#enterButton{
+
 position:fixed;
-bottom:60px;
+bottom:70px;
 left:50%;
 transform:translateX(-50%);
 display:none;
 flex-direction:column;
 align-items:center;
 cursor:pointer;
+
 }
 
-/* loader */
+/* loader estilo efootball */
 
 .loader{
-width:70px;
-height:70px;
-border:7px solid #1e293b;
-border-top:7px solid #2563eb;
+
+width:60px;
+height:60px;
+
+border:4px solid rgba(255,255,255,0.2);
+border-top:4px solid white;
+
 border-radius:50%;
+
 animation:spin 1s linear infinite;
+
 }
 
 /* animacion */
 
 @keyframes spin{
 
-0%{
-transform:rotate(0deg);
-}
+0%{ transform:rotate(0deg); }
 
-100%{
-transform:rotate(360deg);
-}
+100%{ transform:rotate(360deg); }
 
 }
 
-.loading-text{
+/* texto */
+
+.enterText{
+
 color:white;
 margin-top:10px;
-font-size:16px;
-letter-spacing:2px;
+font-size:14px;
+letter-spacing:3px;
+opacity:0.9;
+
 }
 
 </style>
@@ -80,30 +103,35 @@ letter-spacing:2px;
 <!-- VIDEO -->
 
 <video id="introVideo" autoplay muted playsinline>
+
 <source src="intro.mp4" type="video/mp4">
+
 </video>
 
-<!-- CIRCULO -->
+<div class="overlay"></div>
 
-<div id="loading" onclick="irMenu()">
+<!-- BOTON -->
+
+<div id="enterButton" onclick="irMenu()">
 
 <div class="loader"></div>
 
-<div class="loading-text">
-Pulsa para continuar
+<div class="enterText">
+PRESIONA PARA CONTINUAR
 </div>
 
 </div>
 
 <script>
 
-/* mostrar boton despues de 6 segundos */
+/* mostrar boton luego de 6 segundos */
 
 setTimeout(function(){
 
-document.getElementById("loading").style.display="flex";
+document.getElementById("enterButton").style.display="flex";
 
 },6000);
+
 
 /* ir al menu */
 
