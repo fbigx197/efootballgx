@@ -22,8 +22,6 @@ background-position:center;
 overflow-x:hidden;
 min-height:100vh;
 animation:fadePage 1s ease;
-position:relative;
-z-index:1;
 }
 
 @keyframes fadePage{
@@ -31,20 +29,13 @@ from{opacity:0; transform:translateY(20px)}
 to{opacity:1; transform:translateY(0)}
 }
 
-/* OVERLAY ARREGLADO */
-
 .overlay{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
 background:rgba(0,0,0,0.75);
-z-index:0;
-pointer-events:none;
+z-index:-1;
 }
-
-/* BOTON VOLVER */
 
 .backButton{
 position:absolute;
@@ -125,7 +116,6 @@ background:rgba(0,0,0,0.9);
 display:none;
 overflow-y:auto;
 padding:40px 0;
-z-index:5;
 }
 
 .modalContent{
@@ -223,7 +213,6 @@ padding:12px;
 display:flex;
 flex-direction:column;
 gap:10px;
-z-index:6;
 }
 
 .playerTop{
@@ -320,6 +309,8 @@ width:100%;
 
 </div>
 
+<!-- MODAL -->
+
 <div class="modal" id="modal">
 
 <div class="modalContent">
@@ -378,7 +369,7 @@ width:100%;
 
 <script>
 
-/* CARTAS */
+/* CARTAS DE JUGADORES */
 
 const playerCards={
 "Vinicius":"vinicius.webp",
@@ -406,13 +397,13 @@ const playerCards={
 "Ter Stegen":"terstegen.webp"
 }
 
-/* DATOS */
+/* DATOS DE JUGADORES */
 
 const players={
 
 Juan:{
-team:"FC Barcelona",
-photo:"barcelona.png",
+team:"Real Madrid",
+photo:"juan.jpg",
 stats:{victorias:12,empates:3,derrotas:4,goles:32},
 
 formation:[
@@ -459,6 +450,8 @@ formation:[
 
 }
 
+/* MOSTRAR JUGADOR */
+
 function showPlayer(name){
 
 const p=players[name]
@@ -469,7 +462,6 @@ document.getElementById("playerTeam").innerText=p.team
 document.getElementById("playerPhoto").src=p.photo
 
 let statsHTML=""
-
 for(let s in p.stats){
 statsHTML+=`<div class="stat">${s}: ${p.stats[s]}</div>`
 }
@@ -502,6 +494,110 @@ field.appendChild(div)
 function closeModal(){
 document.getElementById("modal").style.display="none"
 }
+
+/* PLAYER MUSICA SIN DESINCRONIZAR */
+
+let music=document.getElementById("music")
+let progress=document.getElementById("progress")
+
+let songs=[
+{title:"Bad Bunny - EoO",file:"eoo.mp3",cover:"badbunny.png"},
+{title:"Bad Bunny - Baile Inolvidable",file:"baile.mp3",cover:"badbunny.png"},
+{title:"Fuerza Regida - Coqueta",file:"COQUETA.mp3",cover:"coqueta.jfif"}
+]
+
+let currentSong=parseInt(localStorage.getItem("songIndex"))||0
+let savedTime=parseFloat(localStorage.getItem("songTime"))||0
+let playing=true
+
+function loadSong(){
+
+music.src=songs[currentSong].file
+
+document.getElementById("songTitle").innerText=songs[currentSong].title
+document.getElementById("cover").src=songs[currentSong].cover
+
+music.currentTime=savedTime
+
+music.play()
+
+}
+
+function nextSong(){
+
+currentSong++
+if(currentSong>=songs.length) currentSong=0
+
+savedTime=0
+loadSong()
+
+}
+
+function prevSong(){
+
+currentSong--
+if(currentSong<0) currentSong=songs.length-1
+
+savedTime=0
+loadSong()
+
+}
+
+function togglePlay(){
+
+if(playing){
+music.pause()
+playing=false
+}else{
+music.play()
+playing=true
+}
+
+}
+
+function setVolume(v){
+music.volume=v
+}
+
+music.addEventListener("timeupdate",function(){
+
+progress.value=music.currentTime
+
+document.getElementById("currentTime").innerText=formatTime(music.currentTime)
+document.getElementById("duration").innerText=formatTime(music.duration)
+
+localStorage.setItem("songIndex",currentSong)
+localStorage.setItem("songTime",music.currentTime)
+
+})
+
+music.addEventListener("loadedmetadata",function(){
+progress.max=music.duration
+})
+
+progress.addEventListener("input",function(){
+music.currentTime=progress.value
+})
+
+music.addEventListener("ended",function(){
+nextSong()
+})
+
+function formatTime(t){
+
+if(isNaN(t)) return "0:00"
+
+let m=Math.floor(t/60)
+let s=Math.floor(t%60)
+
+if(s<10) s="0"+s
+
+return m+":"+s
+
+}
+
+loadSong()
+music.volume=0.6
 
 </script>
 
