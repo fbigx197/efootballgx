@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -15,14 +14,10 @@ body{
 margin:0;
 font-family:Arial, Helvetica, sans-serif;
 color:white;
-
-/* FONDO */
-
 background-image:url("fondo.webp");
 background-size:cover;
 background-position:center;
 background-attachment:fixed;
-
 }
 
 /* OSCURECER FONDO */
@@ -104,8 +99,6 @@ color:white;
 transform:scale(1.08);
 }
 
-/* COLORES */
-
 .tile1{ background:#374151; }
 .tile2{ background:#06b6d4; }
 .tile3{ background:#84cc16; }
@@ -126,120 +119,103 @@ opacity:0.6;
 font-size:14px;
 }
 
-/* BOTON MUSICA */
-
-.musicButton{
-position:fixed;
-bottom:20px;
-left:20px;
-background:rgba(0,0,0,0.6);
-color:white;
-padding:10px 18px;
-border-radius:20px;
-font-size:14px;
-cursor:pointer;
-border:1px solid rgba(255,255,255,0.3);
-transition:0.3s;
-}
-
-.musicButton:hover{
-background:rgba(255,255,255,0.15);
-}
-
 /* MINI PLAYER */
 
 .playerMini{
 
 position:fixed;
-
 bottom:20px;
 right:20px;
 
-width:280px;
+width:320px;
 
 background:rgba(0,0,0,0.75);
-
 backdrop-filter:blur(6px);
 
 border-radius:15px;
-
 padding:12px;
 
 display:flex;
-
-align-items:center;
-
-gap:12px;
+flex-direction:column;
+gap:10px;
 
 box-shadow:0 0 15px rgba(0,0,0,0.5);
 
 }
 
-/* COVER */
+/* FILA SUPERIOR */
 
-.playerMini img{
-
-width:45px;
-height:45px;
-
-border-radius:8px;
-
-object-fit:cover;
-
+.playerTop{
+display:flex;
+align-items:center;
+gap:12px;
 }
 
-/* INFO */
+.playerMini img{
+width:45px;
+height:45px;
+border-radius:8px;
+object-fit:cover;
+}
 
 .songInfo{
-
 flex:1;
-
 font-size:13px;
-
 }
 
 .songTitle{
-
 font-weight:bold;
-
 font-size:14px;
-
 }
 
 /* CONTROLES */
 
 .playerControls{
-
 display:flex;
-
 gap:6px;
-
 }
 
 .ctrlBtn{
-
 background:#111827;
-
 border:none;
-
 color:white;
-
 font-size:16px;
-
 padding:6px 8px;
-
 border-radius:6px;
-
 cursor:pointer;
-
 transition:0.2s;
-
 }
 
 .ctrlBtn:hover{
-
 background:#3b82f6;
+}
 
+/* PROGRESO */
+
+.progressBar{
+width:100%;
+}
+
+/* TIEMPO */
+
+.time{
+display:flex;
+justify-content:space-between;
+font-size:11px;
+opacity:0.8;
+}
+
+/* VOLUMEN */
+
+.volumeControl{
+display:flex;
+align-items:center;
+gap:8px;
+font-size:12px;
+}
+
+.volumeControl input{
+width:100%;
 }
 
 </style>
@@ -250,11 +226,7 @@ background:#3b82f6;
 
 <div class="overlay"></div>
 
-<!-- AUDIO -->
-
-<audio id="music" autoplay></audio>
-
-<!-- BARRA SUPERIOR -->
+<audio id="music"></audio>
 
 <div class="topbar">
 <div>eFootball World</div>
@@ -263,13 +235,9 @@ background:#3b82f6;
 <div>Extras</div>
 </div>
 
-<!-- PANEL -->
-
 <div class="mainPanel">
 GX EFOOTBALL FEDERATION
 </div>
-
-<!-- MENU -->
 
 <div class="menuGrid">
 
@@ -304,15 +272,11 @@ GX EFOOTBALL FEDERATION
 GX eFootball Federation 2026
 </div>
 
-<!-- BOTON MUSICA -->
-
-<div class="musicButton" onclick="toggleMusic()" id="musicBtn">
-Música ON
-</div>
-
-<!-- MINI REPRODUCTOR -->
+<!-- MINI PLAYER -->
 
 <div class="playerMini">
+
+<div class="playerTop">
 
 <img id="cover" src="cover1.jpg">
 
@@ -324,8 +288,23 @@ Música ON
 <div class="playerControls">
 
 <button class="ctrlBtn" onclick="prevSong()">⏮</button>
+<button class="ctrlBtn" onclick="togglePlay()">⏯</button>
 <button class="ctrlBtn" onclick="nextSong()">⏭</button>
 
+</div>
+
+</div>
+
+<input type="range" id="progress" class="progressBar" value="0" step="1">
+
+<div class="time">
+<span id="currentTime">0:00</span>
+<span id="duration">0:00</span>
+</div>
+
+<div class="volumeControl">
+🔊
+<input type="range" min="0" max="1" step="0.01" value="0.6" onchange="setVolume(this.value)">
 </div>
 
 </div>
@@ -333,7 +312,7 @@ Música ON
 <script>
 
 let music = document.getElementById("music");
-let musicBtn = document.getElementById("musicBtn");
+let progress = document.getElementById("progress");
 
 let songs = [
 
@@ -370,16 +349,17 @@ cover:"cover5.jpg"
 ];
 
 let currentSong = 0;
+let playing = false;
 
 function loadSong(){
 
 music.src = songs[currentSong].file;
 
 document.getElementById("songTitle").innerText = songs[currentSong].title;
-
 document.getElementById("cover").src = songs[currentSong].cover;
 
 music.play();
+playing=true;
 
 }
 
@@ -387,8 +367,8 @@ function nextSong(){
 
 currentSong++;
 
-if(currentSong >= songs.length){
-currentSong = 0;
+if(currentSong>=songs.length){
+currentSong=0;
 }
 
 loadSong();
@@ -399,40 +379,90 @@ function prevSong(){
 
 currentSong--;
 
-if(currentSong < 0){
-currentSong = songs.length - 1;
+if(currentSong<0){
+currentSong=songs.length-1;
 }
 
 loadSong();
 
 }
 
-let playing = true;
-
-function toggleMusic(){
+function togglePlay(){
 
 if(playing){
-
 music.pause();
-musicBtn.innerText="Música OFF";
 playing=false;
-
 }else{
-
 music.play();
-musicBtn.innerText="Música ON";
 playing=true;
-
 }
 
 }
 
-/* CARGAR PRIMERA */
+function setVolume(value){
+music.volume=value;
+}
+
+/* ACTUALIZAR PROGRESO */
+
+music.addEventListener("timeupdate",function(){
+
+progress.value=music.currentTime;
+
+let current=formatTime(music.currentTime);
+let total=formatTime(music.duration);
+
+document.getElementById("currentTime").innerText=current;
+document.getElementById("duration").innerText=total;
+
+});
+
+/* CUANDO CARGA */
+
+music.addEventListener("loadedmetadata",function(){
+
+progress.max=music.duration;
+
+});
+
+/* MOVER PROGRESO */
+
+progress.addEventListener("input",function(){
+
+music.currentTime=progress.value;
+
+});
+
+/* AUTO SIGUIENTE */
+
+music.addEventListener("ended",function(){
+
+nextSong();
+
+});
+
+/* FORMATO TIEMPO */
+
+function formatTime(time){
+
+if(isNaN(time)) return "0:00";
+
+let minutes=Math.floor(time/60);
+let seconds=Math.floor(time%60);
+
+if(seconds<10) seconds="0"+seconds;
+
+return minutes+":"+seconds;
+
+}
+
+/* INICIO */
 
 loadSong();
+music.volume=0.6;
 
 </script>
 
 </body>
+
 </html>
-```
