@@ -14,7 +14,6 @@ body{
 margin:0;
 font-family:Arial;
 color:white;
-
 background-image:url("fondo.jpg");
 background-size:cover;
 background-position:center;
@@ -47,40 +46,28 @@ margin-top:40px;
 /* TARJETAS */
 
 .card{
-
 width:220px;
 height:260px;
-
 background:linear-gradient(135deg,#111827,#1f2937);
-
 border-radius:18px;
-
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-
 cursor:pointer;
-
 transition:0.3s;
-
 }
 
 .card:hover{
-
 transform:scale(1.08);
 background:#2563eb;
-
 }
 
 .card img{
-
 width:80px;
 height:80px;
-
 border-radius:50%;
 margin-bottom:10px;
-
 }
 
 .card h3{
@@ -94,55 +81,38 @@ opacity:0.8;
 /* MODAL */
 
 .modal{
-
 position:fixed;
-
 top:0;
 left:0;
-
 width:100%;
 height:100%;
-
 background:rgba(0,0,0,0.9);
-
 display:none;
-
 align-items:center;
 justify-content:center;
-
 }
 
 .modalContent{
-
 background:#111827;
-
 padding:30px;
-
 border-radius:20px;
-
-width:90%;
-max-width:900px;
-
+width:95%;
+max-width:1200px;
 }
 
 /* HEADER */
 
 .playerHeader{
-
 display:flex;
 align-items:center;
 gap:20px;
-
 margin-bottom:20px;
-
 }
 
 .playerHeader img{
-
 width:80px;
 height:80px;
 border-radius:50%;
-
 }
 
 .playerHeader h2{
@@ -152,82 +122,60 @@ margin:0;
 /* ESTADISTICAS */
 
 .stats{
-
 display:flex;
 gap:20px;
 margin-bottom:20px;
 flex-wrap:wrap;
-
 }
 
 .stat{
-
 background:#1f2937;
 padding:10px 15px;
 border-radius:10px;
-
 }
 
 /* CANCHA */
 
 .field{
-
 position:relative;
-
 width:100%;
-height:420px;
-
+height:650px;
 background:url("cancha.png");
 background-size:cover;
 border-radius:15px;
-
 }
 
-/* JUGADORES EN CANCHA */
+/* JUGADORES */
 
 .player{
-
 position:absolute;
-
 display:flex;
 flex-direction:column;
 align-items:center;
-
-font-size:12px;
-
+transform:translate(-50%,0);
 }
 
 .player img{
-
-width:70px;
-margin-bottom:4px;
-
+width:95px;
+margin-bottom:6px;
 }
 
 .player span{
-
 background:#2563eb;
-padding:4px 8px;
+padding:4px 10px;
 border-radius:8px;
-
+font-size:13px;
 }
 
 /* BOTON */
 
 .closeBtn{
-
 margin-top:20px;
-
 padding:10px 20px;
-
 background:#ef4444;
-
 border-radius:10px;
-
 cursor:pointer;
-
 display:inline-block;
-
 }
 
 </style>
@@ -243,27 +191,21 @@ display:inline-block;
 <div class="playersGrid">
 
 <div class="card" onclick="showPlayer('Juan')">
-
 <img src="juan.jpg">
 <h3>Juan</h3>
 <span>Real Madrid</span>
-
 </div>
 
 <div class="card" onclick="showPlayer('Lucas')">
-
 <img src="lucas.jpg">
 <h3>Lucas</h3>
 <span>Manchester City</span>
-
 </div>
 
 <div class="card" onclick="showPlayer('Mateo')">
-
 <img src="mateo.jpg">
 <h3>Mateo</h3>
 <span>Barcelona</span>
-
 </div>
 
 </div>
@@ -297,7 +239,7 @@ display:inline-block;
 
 <script>
 
-/* LISTA DE CARTAS AUTOMATICAS */
+/* LISTA DE CARTAS */
 
 const playerCards={
 
@@ -334,7 +276,6 @@ const players={
 Juan:{
 
 team:"Real Madrid",
-
 photo:"juan.jpg",
 
 stats:{
@@ -346,20 +287,20 @@ goles:32
 
 formation:[
 
-{name:"Vinicius",x:20,y:60},
-{name:"Haaland",x:45,y:60},
-{name:"Messi",x:70,y:60},
+{name:"Vinicius",x:20,y:85},
+{name:"Haaland",x:50,y:85},
+{name:"Messi",x:80,y:85},
 
-{name:"Pedri",x:25,y:40},
-{name:"De Jong",x:45,y:40},
-{name:"Bellingham",x:65,y:40},
+{name:"Pedri",x:25,y:65},
+{name:"De Jong",x:50,y:65},
+{name:"Bellingham",x:75,y:65},
 
-{name:"Theo",x:10,y:20},
-{name:"VVD",x:35,y:20},
-{name:"Araujo",x:55,y:20},
-{name:"Walker",x:80,y:20},
+{name:"Theo",x:10,y:40},
+{name:"VVD",x:35,y:40},
+{name:"Araujo",x:65,y:40},
+{name:"Walker",x:90,y:40},
 
-{name:"Courtois",x:45,y:5}
+{name:"Courtois",x:50,y:12}
 
 ]
 
@@ -368,7 +309,6 @@ formation:[
 Lucas:{
 
 team:"Manchester City",
-
 photo:"lucas.jpg",
 
 stats:{
@@ -380,21 +320,21 @@ goles:28
 
 formation:[
 
-{name:"Mbappe",x:45,y:60},
+{name:"Mbappe",x:50,y:85},
 
-{name:"Neymar",x:25,y:50},
-{name:"De Bruyne",x:45,y:50},
-{name:"Salah",x:65,y:50},
+{name:"Neymar",x:25,y:70},
+{name:"De Bruyne",x:50,y:70},
+{name:"Salah",x:75,y:70},
 
-{name:"Rodri",x:35,y:35},
-{name:"Kroos",x:55,y:35},
+{name:"Rodri",x:35,y:50},
+{name:"Kroos",x:65,y:50},
 
-{name:"Davies",x:10,y:20},
-{name:"Dias",x:35,y:20},
-{name:"Rudiger",x:55,y:20},
-{name:"Cancelo",x:80,y:20},
+{name:"Davies",x:10,y:35},
+{name:"Dias",x:35,y:35},
+{name:"Rudiger",x:65,y:35},
+{name:"Cancelo",x:90,y:35},
 
-{name:"Ter Stegen",x:45,y:5}
+{name:"Ter Stegen",x:50,y:10}
 
 ]
 
@@ -415,34 +355,26 @@ document.getElementById("playerPhoto").src=p.photo
 let statsHTML=""
 
 for(let s in p.stats){
-
 statsHTML+=`<div class="stat">${s}: ${p.stats[s]}</div>`
-
 }
 
 document.getElementById("stats").innerHTML=statsHTML
 
 let field=document.getElementById("field")
-
 field.innerHTML=""
 
 p.formation.forEach(pl=>{
 
 let div=document.createElement("div")
-
 div.className="player"
 
 if(playerCards[pl.name]){
-
 div.innerHTML=`
 <img src="${playerCards[pl.name]}">
 <span>${pl.name}</span>
 `
-
 }else{
-
 div.innerHTML=`<span>${pl.name}</span>`
-
 }
 
 div.style.left=pl.x+"%"
@@ -455,13 +387,10 @@ field.appendChild(div)
 }
 
 function closeModal(){
-
 document.getElementById("modal").style.display="none"
-
 }
 
 </script>
 
 </body>
-
 </html>
