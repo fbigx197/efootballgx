@@ -70,14 +70,6 @@ border-radius:50%;
 margin-bottom:10px;
 }
 
-.card h3{
-margin:5px 0;
-}
-
-.card span{
-opacity:0.8;
-}
-
 /* MODAL */
 
 .modal{
@@ -97,7 +89,7 @@ background:#111827;
 padding:30px;
 border-radius:20px;
 width:95%;
-max-width:1200px;
+max-width:1400px;
 }
 
 /* HEADER */
@@ -113,10 +105,6 @@ margin-bottom:20px;
 width:80px;
 height:80px;
 border-radius:50%;
-}
-
-.playerHeader h2{
-margin:0;
 }
 
 /* ESTADISTICAS */
@@ -139,10 +127,11 @@ border-radius:10px;
 .field{
 position:relative;
 width:100%;
-height:650px;
+height:850px;
 background:url("cancha.png");
 background-size:cover;
-border-radius:15px;
+background-position:center;
+border-radius:20px;
 }
 
 /* JUGADORES */
@@ -155,16 +144,28 @@ align-items:center;
 transform:translate(-50%,0);
 }
 
+/* CARTAS */
+
 .player img{
-width:95px;
+width:70px;
 margin-bottom:6px;
+filter:drop-shadow(0 4px 6px rgba(0,0,0,0.7));
 }
 
+/* NOMBRE */
+
 .player span{
-background:#2563eb;
-padding:4px 10px;
-border-radius:8px;
+
 font-size:13px;
+font-weight:bold;
+
+background:rgba(0,0,0,0.65);
+padding:4px 10px;
+
+border-radius:6px;
+
+letter-spacing:0.5px;
+
 }
 
 /* BOTON */
@@ -210,8 +211,6 @@ display:inline-block;
 
 </div>
 
-<!-- MODAL -->
-
 <div class="modal" id="modal">
 
 <div class="modalContent">
@@ -239,7 +238,7 @@ display:inline-block;
 
 <script>
 
-/* LISTA DE CARTAS */
+/* CARTAS */
 
 const playerCards={
 
@@ -287,20 +286,20 @@ goles:32
 
 formation:[
 
-{name:"Vinicius",x:20,y:85},
-{name:"Haaland",x:50,y:85},
-{name:"Messi",x:80,y:85},
+{name:"Vinicius",x:20,y:88},
+{name:"Haaland",x:50,y:88},
+{name:"Messi",x:80,y:88},
 
-{name:"Pedri",x:25,y:65},
-{name:"De Jong",x:50,y:65},
-{name:"Bellingham",x:75,y:65},
+{name:"Pedri",x:25,y:68},
+{name:"De Jong",x:50,y:68},
+{name:"Bellingham",x:75,y:68},
 
-{name:"Theo",x:10,y:40},
+{name:"Theo",x:12,y:40},
 {name:"VVD",x:35,y:40},
 {name:"Araujo",x:65,y:40},
-{name:"Walker",x:90,y:40},
+{name:"Walker",x:88,y:40},
 
-{name:"Courtois",x:50,y:12}
+{name:"Courtois",x:50,y:10}
 
 ]
 
@@ -320,7 +319,7 @@ goles:28
 
 formation:[
 
-{name:"Mbappe",x:50,y:85},
+{name:"Mbappe",x:50,y:88},
 
 {name:"Neymar",x:25,y:70},
 {name:"De Bruyne",x:50,y:70},
@@ -329,10 +328,10 @@ formation:[
 {name:"Rodri",x:35,y:50},
 {name:"Kroos",x:65,y:50},
 
-{name:"Davies",x:10,y:35},
-{name:"Dias",x:35,y:35},
-{name:"Rudiger",x:65,y:35},
-{name:"Cancelo",x:90,y:35},
+{name:"Davies",x:12,y:38},
+{name:"Dias",x:35,y:38},
+{name:"Rudiger",x:65,y:38},
+{name:"Cancelo",x:88,y:38},
 
 {name:"Ter Stegen",x:50,y:10}
 
